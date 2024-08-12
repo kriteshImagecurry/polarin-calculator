@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Polarin Calculator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Parisienne&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --body-padding-sm: 2rem;
+        --body-padding-md: 6rem;
+        --body-padding-lg: 8rem;
+        --body-padding-xl: 12rem;
+        --body-padding-2xl: 16rem;
+        --body-padding-3xl: 18rem;
+        --body-padding: 32rem;
+      }
+
+      body {
+        font-family: "Montserrat", sans-serif;
+        font-optical-sizing: auto;
+        font-style: normal;
+      }
+
+      .footer-bg {
+        background: url("./assets/images/blog-footer.png");
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+      .body-padding {
+        padding: 0 var(--body-padding-sm);
+      }
+      .body-padding-l {
+        padding-left: var(--body-padding-sm);
+      }
+      .body-padding-r {
+        padding-right: var(--body-padding-sm);
+      }
+
+      @media screen and (min-width: 640px) {
+        .body-padding {
+          padding: 0 var(--body-padding-sm);
+        }
+        .body-padding-l {
+          padding-left: var(--body-padding-sm);
+        }
+        .body-padding-r {
+          padding-right: var(--body-padding-sm);
+        }
+      }
+      @media screen and (min-width: 1024px) {
+        .body-padding {
+          padding: 0 var(--body-padding-lg);
+        }
+        .body-padding-l {
+          padding-left: var(--body-padding-lg);
+        }
+        .body-padding-r {
+          padding-right: var(--body-padding-lg);
+        }
+      }
+      @media screen and (min-width: 768px) {
+        .body-padding {
+          padding: 0 var(--body-padding-md);
+        }
+        .body-padding-l {
+          padding-left: var(--body-padding-md);
+        }
+        .body-padding-r {
+          padding-right: var(--body-padding-md);
+        }
+        p {
+          font-size: large;
+        }
+      }
+      @media screen and (min-width: 1280px) {
+        .body-padding {
+          padding: 0 var(--body-padding-xl);
+        }
+        .body-padding-l {
+          padding-left: var(--body-padding-xl);
+        }
+        .body-padding-r {
+          padding-right: var(--body-padding-xl);
+        }
+        p {
+          font-size: large;
+        }
+      }
+      @media screen and (min-width: 1536px) {
+        .body-padding {
+          padding: 0 var(--body-padding-2xl);
+        }
+        .body-padding-l {
+          padding-left: var(--body-padding-2xl);
+        }
+        .body-padding-r {
+          padding-right: var(--body-padding-2xl);
+        }
+        p {
+          font-size: large;
+        }
+      }
+      @media screen and (min-width: 1736px) {
+        .body-padding {
+          padding: 0 var(--body-padding-3xl);
+        }
+        .body-padding-l {
+          padding-left: var(--body-padding-3xl);
+        }
+        .body-padding-r {
+          padding-right: var(--body-padding-3xl);
+        }
+        p {
+          font-size: large;
+        }
+      }
+      h1 {
+        font-size: 2rem !important;
+      }
+    </style>
+  </head>
+
+  <body class="body-padding mx-auto py-24">
+    <div class="flex flex-wrap lg:flex-nowrap">
+      <div class="lg:w-1/3 mr-24">
+        <h1 class="underline">Polarin Calculator</h1>
+        <div class="mt-12 space-y-8">
+          <div class="space-y-2">
+            <p>Data to be transferred out/month (in Gb)</p>
+            <input
+              type="text"
+              class="border rounded-lg ps-4 py-2"
+              name="data-to-transfer"
+              id="data-to-transfer"
+              value="1000"
+            />
+          </div>
+          <div class="space-y-2">
+            <p>Capacity</p>
+            <select
+              name="capacity"
+              id="capacity"
+              class="p-2 border rounded-lg ps-4"
+            >
+              <option value="50M">50 Mbps</option>
+              <option value="100M">100 Mbps</option>
+              <option value="200M">200 Mbps</option>
+              <option value="300M">300 Mbps</option>
+              <option value="400M">400 Mbps</option>
+              <option value="500M">500 Mbps</option>
+              <option value="1G">1G</option>
+              <option value="2G">2G</option>
+              <option value="5G">5G</option>
+              <option value="10G">10G</option>
+            </select>
+          </div>
+          <div >
+            <button
+              class="bg-red-400 rounded-lg px-4 py-2 text-white font-semibold cursor-pointer"
+              onclick="calculateCost()"
+            >
+              Calculate Cost
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="container mx-auto mt-4 lg:mt-0">
+        <table class="w-full border-collapse border border-gray-300 mb-4">
+          <thead>
+            <tr class="bg-gray-100">
+              <th class="border border-gray-300 p-2"></th>
+              <th class="border border-gray-300 p-2">Through Polarin</th>
+              <th class="border border-gray-300 p-2">Through Internet</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="border border-gray-300 p-2 font-medium">
+                Connection Charges
+              </td>
+              <td
+                class="border border-gray-300 p-2"
+                id="connection-charges-polarin"
+              >
+                -
+              </td>
+              <td
+                class="border border-gray-300 p-2"
+                id="connection-charges-internet"
+              >
+                -
+              </td>
+            </tr>
+            <tr class="bg-gray-50">
+              <td class="border border-gray-300 p-2 font-medium">
+                AWS Port Charges for 1 month
+              </td>
+              <td class="border border-gray-300 p-2" id="port-charges-polarin">
+                -
+              </td>
+              <td class="border border-gray-300 p-2" id="port-charges-internet">
+                -
+              </td>
+            </tr>
+            <tr>
+              <td class="border border-gray-300 p-2 font-medium">
+                Data Transfer Out Charges
+              </td>
+              <td
+                class="border border-gray-300 p-2"
+                id="data-out-charges-polarin"
+              >
+                -
+              </td>
+              <td
+                class="border border-gray-300 p-2"
+                id="data-out-charges-internet"
+              >
+                -
+              </td>
+            </tr>
+            <tr class="bg-gray-50">
+              <td class="border border-gray-300 p-2 font-medium">Total MRC</td>
+              <td class="border border-gray-300 p-2" id="total-mrc-polarin">
+                -
+              </td>
+              <td class="border border-gray-300 p-2" id="total-mrc-internet">
+                -
+              </td>
+            </tr>
+            <tr>
+              <td class="border border-gray-300 p-2 font-medium">OTC</td>
+              <td class="border border-gray-300 p-2" id=""></td>
+              <td class="border border-gray-300 p-2" id=""></td>
+            </tr>
+            <tr class="bg-gray-50">
+              <td class="border border-gray-300 p-2 font-medium">
+                TCO for 1 year
+              </td>
+              <td class="border border-gray-300 p-2 font-bold" id="tco-polarin">
+                -
+              </td>
+              <td
+                class="border border-gray-300 p-2 font-bold"
+                id="tco-internet"
+              >
+                -
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <table class="lg:w-1/2 border-collapse border border-gray-300 mt-12">
+          <tbody>
+            <tr>
+              <td class="border border-gray-300 p-2 font-medium">
+                Savings for 1 Year
+              </td>
+              <td
+                class="border border-gray-300 p-2 font-bold"
+                id="savings-per-year"
+              >
+                -
+              </td>
+            </tr>
+            <tr class="bg-gray-50">
+              <td class="border border-gray-300 p-2 font-medium">Savings %</td>
+              <td
+                class="border border-gray-300 p-2 font-bold"
+                id="savings-percentage"
+              >
+                -
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+  <script src="./script.js"></script>
+</html>
