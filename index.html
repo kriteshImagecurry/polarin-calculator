@@ -156,7 +156,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   </head>
 
-  <body class="body-padding mx-auto py-24 bg-[#0a3650]">
+  <body class="body-padding mx-auto py-24 bg-[#0a3650] relative">
     <div class="flex flex-wrap lg:flex-nowrap items-center gap-12">
       <div class="lg:w-2/3">
         <div class="bg-white rounded-xl py-12 px-16 shadow-2xl">
@@ -168,7 +168,7 @@
                 class="border rounded w-full ps-4 py-2 text-xl font-light"
                 name="data-to-transfer"
                 id="data-to-transfer"
-                value="1000"
+                value="40000"
               />
             </div>
             <div class="space-y-2">
@@ -323,8 +323,45 @@
             </tr>
           </tbody>
         </table> -->
-      <div class="bg-white rounded-xl p-12 shadow-2xl flex-1">
+      <div class="bg-white rounded-xl px-12 py-8 shadow-2xl flex-1">
         <div class="pb-8">
+          <div class="flex justify-between">
+            <h3 class="font-medium text-2xl xl:text-4xl text-gray-700">
+              Total Cost
+            </h3>
+            <p
+              id="breakup-table-open"
+              onclick="handlePopover(true)"
+              class="text-sm w-min text-right hover:text-black text-gray-600 transition cursor-pointer ease-out"
+            >
+              Cost breakup
+            </p>
+          </div>
+          <div class="mt-2">
+            <div>
+              <h3 class="font-medium text-xl text-gray-700">Through Polarin</h3>
+              <p
+                class="mt-4 font-semibold text-[#ff7a00] text-xl lg:text-2xl"
+                id="tco-polarin"
+              >
+                -
+              </p>
+            </div>
+            <div class="mt-4">
+              <h3 class="font-medium text-xl text-gray-700">
+                Through Internet
+              </h3>
+              <p
+                class="mt-4 font-semibold text-[#ff7a00] text-xl lg:text-2xl"
+                id="tco-internet"
+              >
+                -
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="py-8 border-t border-gray-300">
           <h3 class="font-medium text-2xl xl:text-4xl text-gray-700">
             Savings for 1 Year
           </h3>
@@ -345,6 +382,135 @@
           >
             -
           </p>
+        </div>
+      </div>
+    </div>
+    <div
+      class="w-screen h-screen absolute inset-0 "
+      id="breakup-table-popup"
+    >
+      <div
+        onclick="handlePopover(false)"
+        class="w-full h-full bg-black/30 z-10 cursor-pointer"
+      ></div>
+      <div
+        class="flex items-center justify-center w-max h-max m-auto absolute inset-0 rounded-lg overflow-hidden"
+      >
+        <div class="bg-white px-12 py-8">
+          <div class="flex justify-between items-center">
+            <h1 class="mb-4">Cost breakup</h1>
+          </div>
+          <table class="w-full border-collapse border border-gray-300">
+            <thead>
+              <tr class="bg-gray-100">
+                <th class="border border-gray-300 p-2"></th>
+                <th class="border border-gray-300 p-2">Through Polarin</th>
+                <th class="border border-gray-300 p-2">Through Internet</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="border border-gray-300 p-2 font-medium">
+                  Connection Charges
+                </td>
+                <td
+                  class="border border-gray-300 p-2"
+                  id="connection-charges-polarin"
+                >
+                  -
+                </td>
+                <td
+                  class="border border-gray-300 p-2"
+                  id="connection-charges-internet"
+                >
+                  -
+                </td>
+              </tr>
+              <tr class="bg-gray-50">
+                <td class="border border-gray-300 p-2 font-medium">
+                  AWS Port Charges for 1 month
+                </td>
+                <td
+                  class="border border-gray-300 p-2"
+                  id="port-charges-polarin"
+                >
+                  -
+                </td>
+                <td
+                  class="border border-gray-300 p-2"
+                  id="port-charges-internet"
+                >
+                  -
+                </td>
+              </tr>
+              <tr>
+                <td class="border border-gray-300 p-2 font-medium">
+                  Data Transfer Out Charges
+                </td>
+                <td
+                  class="border border-gray-300 p-2"
+                  id="data-out-charges-polarin"
+                >
+                  -
+                </td>
+                <td
+                  class="border border-gray-300 p-2"
+                  id="data-out-charges-internet"
+                >
+                  -
+                </td>
+              </tr>
+              <tr class="bg-gray-50">
+                <td class="border border-gray-300 p-2 font-medium">
+                  Total MRC
+                </td>
+                <td class="border border-gray-300 p-2" id="total-mrc-polarin">
+                  -
+                </td>
+                <td class="border border-gray-300 p-2" id="total-mrc-internet">
+                  -
+                </td>
+              </tr>
+              <tr>
+                <td class="border border-gray-300 p-2 font-medium">OTC</td>
+                <td class="border border-gray-300 p-2" id=""></td>
+                <td class="border border-gray-300 p-2" id=""></td>
+              </tr>
+              <tr class="bg-gray-50">
+                <td class="border border-gray-300 p-2 font-medium">
+                  TCO for 1 year
+                </td>
+                <td
+                  class="border border-gray-300 p-2 font-bold"
+                  id="tco-table-polarin"
+                >
+                  -
+                </td>
+                <td
+                  class="border border-gray-300 p-2 font-bold"
+                  id="tco-table-internet"
+                >
+                  -
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div
+            class="w-[16px] aspect-square cursor-pointer absolute top-5 right-5"
+            id="breakup-table-close"
+            onclick="handlePopover(false)"
+          >
+            <svg
+              class="h-full w-full"
+              viewBox="0 0 329.26933 329"
+              width="329pt"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="m194.800781 164.769531 128.210938-128.214843c8.34375-8.339844 8.34375-21.824219 0-30.164063-8.339844-8.339844-21.824219-8.339844-30.164063 0l-128.214844 128.214844-128.210937-128.214844c-8.34375-8.339844-21.824219-8.339844-30.164063 0-8.34375 8.339844-8.34375 21.824219 0 30.164063l128.210938 128.214843-128.210938 128.214844c-8.34375 8.339844-8.34375 21.824219 0 30.164063 4.15625 4.160156 9.621094 6.25 15.082032 6.25 5.460937 0 10.921875-2.089844 15.082031-6.25l128.210937-128.214844 128.214844 128.214844c4.160156 4.160156 9.621094 6.25 15.082032 6.25 5.460937 0 10.921874-2.089844 15.082031-6.25 8.34375-8.339844 8.34375-21.824219 0-30.164063zm0 0"
+              />
+            </svg>
+          </div>
         </div>
       </div>
     </div>

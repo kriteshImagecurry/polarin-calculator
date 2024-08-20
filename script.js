@@ -178,17 +178,20 @@ const calculateTCO = (inputCapacity, inputDataToTransfer, entity) => {
   });
 
   //set data to table
-  // document.getElementById(`connection-charges-${entity}`).innerHTML =
-  //   numberToCurrency(connectionCharges);
-  // document.getElementById(`port-charges-${entity}`).innerHTML =
-  //   numberToCurrency(awsPortChargesPerMonth);
-  // document.getElementById(`data-out-charges-${entity}`).innerHTML =
-  //   numberToCurrency(dataTransferOutCharges);
-  // document.getElementById(`total-mrc-${entity}`).innerHTML =
-  //   numberToCurrency(totalMRC);
-  // document.getElementById(`tco-${entity}`).innerHTML = numberToCurrency(
-  //   TCOPerYear.toFixed(2)
-  // );
+  document.getElementById(`connection-charges-${entity}`).innerHTML =
+    numberToCurrency(connectionCharges);
+  document.getElementById(`port-charges-${entity}`).innerHTML =
+    numberToCurrency(awsPortChargesPerMonth);
+  document.getElementById(`data-out-charges-${entity}`).innerHTML =
+    numberToCurrency(dataTransferOutCharges);
+  document.getElementById(`total-mrc-${entity}`).innerHTML =
+    numberToCurrency(totalMRC);
+  document.getElementById(`tco-${entity}`).innerHTML = numberToCurrency(
+    TCOPerYear.toFixed(2)
+  );
+  document.getElementById(`tco-table-${entity}`).innerHTML = numberToCurrency(
+    TCOPerYear.toFixed(2)
+  );
   return TCOPerYear.toFixed(2);
 };
 
@@ -198,9 +201,34 @@ const calculatePortCharges = (inputDataToTransfer, entity) => {
     polarin: "polarinCostPerGB",
     internet: "internetCostPerGB",
   };
+
   let entityObj = entitykeyObj[entity];
   // inputDataToTransfer is in GB
   let inputDataTransferTB = inputDataToTransfer / 1000;
+
+  if (entity === "internet") {
+    const E37 = dataTransferOut[10][entityObj];
+    const E38 = dataTransferOut[40][entityObj];
+    const E39 = dataTransferOut[100][entityObj];
+    const E40 = dataTransferOut[150][entityObj];
+    if (inputDataToTransfer <= 10240) return inputDataToTransfer * E37;
+    if (inputDataToTransfer <= 51200)
+      return 10240 * E37 + (inputDataToTransfer - 10240) * E38;
+    if (inputDataToTransfer <= 153600)
+      return 10240 * E37 + 40960 * E38 + (inputDataToTransfer - 51200) * E39;
+
+    return (
+      10240 * E37 +
+      40960 * E38 +
+      102400 * E39 +
+      (inputDataToTransfer - 153600) * E40
+    );
+  }
+
+  if (entity === "polarin") {
+    return inputDataToTransfer * 0.045;
+  }
+
   let tierArrayMap = Object.keys(dataTransferOut);
   const tier = tierArrayMap.find((tier) => inputDataTransferTB <= tier);
   return dataTransferOut[tier]?.[entityObj] * inputDataToTransfer;
@@ -228,10 +256,25 @@ const numberToCurrency = (num) => {
 
 $(document).ready(function () {
   var values = Object.keys(capacityRange);
-  $("#slider").on("input", (e) => $("span").text(values[e.target.value]));
+  let inputRangeSlider = document.getElementById("slider").value;
+  $("span").text(values[inputRangeSlider]);
+
+  $("#slider").on("input", (e) => {
+    $("span").text(values[e.target.value]);
+  });
   calculateCost();
+  $("#cost-breakup-popup").on("click", (e) => {
+    $("#cost-breakup-popup").removeClass("intro");
+  });
 });
 
+const handlePopover = (state) => {
+  if (state) {
+    $("#breakup-table-popup").removeClass("hidden");
+  } else {
+    $("#breakup-table-popup").addClass("hidden");
+  }
+};
 // =IF(D48<=10240,D48*E37,
 //     IF(D48<=51200,10240*E37+(D48-10240)*E38,
 //     IF(D48<=153600,10240*E37+40960*E38+(D48-51200)*E39,
