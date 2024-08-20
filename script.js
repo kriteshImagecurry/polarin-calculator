@@ -1,4 +1,5 @@
 "use strict";
+
 const capacityRange = {
   "50M": {
     id: "50M",
@@ -112,7 +113,9 @@ const portCharges = 730;
 const calculateCost = () => {
   console.log("Calculating cost");
   const inputDataToTransfer = document.getElementById("data-to-transfer").value;
-  const inputCapacity = document.getElementById("capacity").value;
+  let inputCapacityKey = document.getElementById("slider").value;
+  let inputCapacity = Object.keys(capacityRange)[inputCapacityKey];
+
   console.log({ inputDataToTransfer, inputCapacity });
 
   let polarinTCO = calculateTCO(inputCapacity, inputDataToTransfer, "polarin");
@@ -175,17 +178,17 @@ const calculateTCO = (inputCapacity, inputDataToTransfer, entity) => {
   });
 
   //set data to table
-  document.getElementById(`connection-charges-${entity}`).innerHTML =
-    numberToCurrency(connectionCharges);
-  document.getElementById(`port-charges-${entity}`).innerHTML =
-    numberToCurrency(awsPortChargesPerMonth);
-  document.getElementById(`data-out-charges-${entity}`).innerHTML =
-    numberToCurrency(dataTransferOutCharges);
-  document.getElementById(`total-mrc-${entity}`).innerHTML =
-    numberToCurrency(totalMRC);
-  document.getElementById(`tco-${entity}`).innerHTML = numberToCurrency(
-    TCOPerYear.toFixed(2)
-  );
+  // document.getElementById(`connection-charges-${entity}`).innerHTML =
+  //   numberToCurrency(connectionCharges);
+  // document.getElementById(`port-charges-${entity}`).innerHTML =
+  //   numberToCurrency(awsPortChargesPerMonth);
+  // document.getElementById(`data-out-charges-${entity}`).innerHTML =
+  //   numberToCurrency(dataTransferOutCharges);
+  // document.getElementById(`total-mrc-${entity}`).innerHTML =
+  //   numberToCurrency(totalMRC);
+  // document.getElementById(`tco-${entity}`).innerHTML = numberToCurrency(
+  //   TCOPerYear.toFixed(2)
+  // );
   return TCOPerYear.toFixed(2);
 };
 
@@ -210,7 +213,8 @@ const calculateSavings = (polarinTCO, internetTCO) => {
 
   document.getElementById(`savings-per-year`).innerHTML =
     numberToCurrency(savingsPerYear);
-  document.getElementById(`savings-percentage`).innerHTML = savingsPercentage;
+  document.getElementById(`savings-percentage`).innerHTML =
+    savingsPercentage + "%";
 
   return [savingsPerYear, savingsPercentage];
 };
@@ -221,8 +225,14 @@ const numberToCurrency = (num) => {
     currency: "USD",
   });
 };
+
+$(document).ready(function () {
+  var values = Object.keys(capacityRange);
+  $("#slider").on("input", (e) => $("span").text(values[e.target.value]));
+  calculateCost();
+});
+
 // =IF(D48<=10240,D48*E37,
 //     IF(D48<=51200,10240*E37+(D48-10240)*E38,
 //     IF(D48<=153600,10240*E37+40960*E38+(D48-51200)*E39,
 //     10240*E37+40960*E38+102400*E39+(D48-153600)*E40)))
-calculateCost()

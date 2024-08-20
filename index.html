@@ -23,7 +23,7 @@
       }
 
       body {
-        font-family: "Montserrat", sans-serif;
+        font-family: "Barlow", sans-serif;
         font-optical-sizing: auto;
         font-style: normal;
       }
@@ -124,54 +124,96 @@
       h1 {
         font-size: 2rem !important;
       }
+      .slider-container {
+        background-color: #e1e5ee;
+        height: 8px;
+        border-radius: 8px;
+        position: relative;
+      }
+      .track {
+        width: 100%;
+        position: absolute;
+        top: 0;
+        background-color: #1678fb;
+        border-radius: 8px;
+        height: 8px;
+        z-index: 1;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+      .slider {
+        position: absolute;
+        -webkit-appearance: none;
+        top: 0;
+        left: 0;
+        outline: none;
+        width: 100%;
+        height: 8px !important;
+        background: #e1e5ee;
+        border-radius: 8px;
+      }
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   </head>
 
-  <body class="body-padding mx-auto py-24">
-    <div class="flex flex-wrap lg:flex-nowrap">
-      <div class="lg:w-1/3 mr-24">
-        <h1 class="underline">Polarin Calculator</h1>
-        <div class="mt-12 space-y-8">
-          <div class="space-y-2">
-            <p>Data to be transferred out/month (in Gb)</p>
-            <input
-              type="text"
-              class="border rounded-lg ps-4 py-2"
-              name="data-to-transfer"
-              id="data-to-transfer"
-              value="1000"
-            />
-          </div>
-          <div class="space-y-2">
-            <p>Capacity</p>
-            <select
-              name="capacity"
-              id="capacity"
-              class="p-2 border rounded-lg ps-4"
-            >
-              <option value="50M">50 Mbps</option>
-              <option value="100M">100 Mbps</option>
-              <option value="200M">200 Mbps</option>
-              <option value="300M">300 Mbps</option>
-              <option value="400M">400 Mbps</option>
-              <option value="500M">500 Mbps</option>
-              <option value="1G">1G</option>
-              <option value="2G">2G</option>
-              <option value="5G">5G</option>
-              <option value="10G">10G</option>
-            </select>
-          </div>
-          <div >
-            <button
-              class="bg-red-400 rounded-lg px-4 py-2 text-white font-semibold cursor-pointer"
-              onclick="calculateCost()"
-            >
-              Calculate Cost
-            </button>
+  <body class="body-padding mx-auto py-24 bg-[#0a3650]">
+    <div class="flex flex-wrap lg:flex-nowrap items-center gap-12">
+      <div class="lg:w-2/3">
+        <div class="bg-white rounded-xl py-12 px-16 shadow-2xl">
+          <div class="space-y-8">
+            <div class="space-y-2">
+              <p class="text-2xl">Data to be transferred out/month (in Gb)</p>
+              <input
+                type="text"
+                class="border rounded w-full ps-4 py-2 text-xl font-light"
+                name="data-to-transfer"
+                id="data-to-transfer"
+                value="1000"
+              />
+            </div>
+            <div class="space-y-2">
+              <p class="text-2xl">Capacity</p>
+              <div id="sliderData" class="flex gap-8">
+                <input
+                  id="slider"
+                  type="range"
+                  min="0"
+                  max="9"
+                  value="50M"
+                  class="w-full"
+                />
+                <span>50M</span>
+              </div>
+              <!-- <select
+                name="capacity"
+                id="capacity"
+                class="p-2 border rounded-lg ps-4"
+              >
+                <option value="50M">50 Mbps</option>
+                <option value="100M">100 Mbps</option>
+                <option value="200M">200 Mbps</option>
+                <option value="300M">300 Mbps</option>
+                <option value="400M">400 Mbps</option>
+                <option value="500M">500 Mbps</option>
+                <option value="1G">1G</option>
+                <option value="2G">2G</option>
+                <option value="5G">5G</option>
+                <option value="10G">10G</option>
+              </select> -->
+            </div>
+            <div>
+              <button
+                class="bg-[#ff7a00] rounded-lg px-8 py-4 text-white font-semibold cursor-pointer"
+                onclick="calculateCost()"
+              >
+                Calculate Cost
+              </button>
+            </div>
           </div>
         </div>
       </div>
-      <div class="container mx-auto mt-4 lg:mt-0">
+
+      <!-- <div class="hidden container mx-auto mt-4 lg:mt-0">
         <table class="w-full border-collapse border border-gray-300 mb-4">
           <thead>
             <tr class="bg-gray-100">
@@ -280,7 +322,30 @@
               </td>
             </tr>
           </tbody>
-        </table>
+        </table> -->
+      <div class="bg-white rounded-xl p-12 shadow-2xl flex-1">
+        <div class="pb-8">
+          <h3 class="font-medium text-2xl xl:text-4xl text-gray-700">
+            Savings for 1 Year
+          </h3>
+          <p
+            class="mt-4 font-semibold text-[#ff7a00] text-xl lg:text-2xl"
+            id="savings-per-year"
+          >
+            -
+          </p>
+        </div>
+        <div class="pt-8 border-t border-gray-300">
+          <h3 class="font-medium text-2xl xl:text-4xl text-gray-700">
+            Savings %
+          </h3>
+          <p
+            class="mt-4 font-semibold text-[#ff7a00] text-xl lg:text-2xl"
+            id="savings-percentage"
+          >
+            -
+          </p>
+        </div>
       </div>
     </div>
   </body>
