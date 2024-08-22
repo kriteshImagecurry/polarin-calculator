@@ -156,13 +156,20 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   </head>
 
-  <body class="body-padding mx-auto py-24 bg-[#0a3650] relative">
-    <div class="flex flex-wrap lg:flex-nowrap items-center gap-12">
-      <div class="lg:w-2/3">
-        <div class="bg-white rounded-xl py-12 px-16 shadow-2xl">
-          <div class="space-y-8">
+  <body
+    class="body-padding m-auto py-4 lg:py-24 bg-[#0a3650] relative h-screen w-screen overflow-hidden flex items-center justify-between my-auto"
+  >
+    <div
+      class="flex flex-wrap lg:flex-nowrap items-center gap-4 lg:gap-12 flex-1 "
+    >
+      <div class="w-full lg:w-2/3">
+        <h1 class="text-white mb-4">Cost Calculator</h1>
+        <div class="bg-white rounded-xl p-4 lg:py-12 lg:px-16 shadow-2xl">
+          <div class="space-y-4 lg:space-y-8">
             <div class="space-y-2">
-              <p class="text-2xl">Data to be transferred out/month (in Gb)</p>
+              <p class="lg:text-2xl">
+                Data to be transferred out/month (in Gb)
+              </p>
               <input
                 type="text"
                 class="border rounded w-full ps-4 py-2 text-xl font-light"
@@ -172,7 +179,7 @@
               />
             </div>
             <div class="space-y-2">
-              <p class="text-2xl">Capacity</p>
+              <p class="lg:text-2xl">Capacity</p>
               <div id="sliderData" class="flex gap-8">
                 <input
                   id="slider"
@@ -203,7 +210,7 @@
             </div>
             <div>
               <button
-                class="bg-[#ff7a00] rounded-lg px-8 py-4 text-white font-semibold cursor-pointer"
+                class="bg-[#ff7a00] rounded-lg p-2 lg;px-8 lg:py-4 text-white font-semibold cursor-pointer"
                 onclick="calculateCost()"
               >
                 Calculate Cost
@@ -323,10 +330,12 @@
             </tr>
           </tbody>
         </table> -->
-      <div class="bg-white rounded-xl px-12 py-8 shadow-2xl flex-1">
+      <div class="bg-white rounded-xl p-4 lg:px-12 lg:py-8 shadow-2xl flex-1">
         <div class="pb-8">
           <div class="flex justify-between">
-            <h3 class="font-medium text-2xl xl:text-4xl text-gray-700">
+            <h3
+              class="font-medium text-lg md:text-2xl xl:text-4xl text-gray-700"
+            >
               Total Cost
             </h3>
             <p
@@ -337,9 +346,11 @@
               Cost breakup
             </p>
           </div>
-          <div class="mt-2">
+          <div class="mt-2 flex gap-2 md:block justify-between">
             <div>
-              <h3 class="font-medium text-xl text-gray-700">Through Polarin</h3>
+              <h3 class="font-medium md:text-xl text-gray-700">
+                Through Polarin
+              </h3>
               <p
                 class="mt-4 font-semibold text-[#ff7a00] text-xl lg:text-2xl"
                 id="tco-polarin"
@@ -347,8 +358,8 @@
                 -
               </p>
             </div>
-            <div class="mt-4">
-              <h3 class="font-medium text-xl text-gray-700">
+            <div class="md:mt-4">
+              <h3 class="font-medium md:text-xl text-gray-700">
                 Through Internet
               </h3>
               <p
@@ -360,33 +371,34 @@
             </div>
           </div>
         </div>
-
-        <div class="py-8 border-t border-gray-300">
-          <h3 class="font-medium text-2xl xl:text-4xl text-gray-700">
-            Savings for 1 Year
-          </h3>
-          <p
-            class="mt-4 font-semibold text-[#ff7a00] text-xl lg:text-2xl"
-            id="savings-per-year"
-          >
-            -
-          </p>
-        </div>
-        <div class="pt-8 border-t border-gray-300">
-          <h3 class="font-medium text-2xl xl:text-4xl text-gray-700">
-            Savings %
-          </h3>
-          <p
-            class="mt-4 font-semibold text-[#ff7a00] text-xl lg:text-2xl"
-            id="savings-percentage"
-          >
-            -
-          </p>
+        <div class="flex gap-2 justify-between">
+          <div class="pt-4 md:py-8 border-t border-gray-300">
+            <h3 class="font-medium md:text-2xl xl:text-4xl text-gray-700">
+              Savings for 1 Year
+            </h3>
+            <p
+              class="mt-4 font-semibold text-[#ff7a00] text-xl lg:text-2xl"
+              id="savings-per-year"
+            >
+              -
+            </p>
+          </div>
+          <div class="pt-4 md:pt-8 border-t border-gray-300">
+            <h3 class="font-medium md:text-2xl xl:text-4xl text-gray-700">
+              Savings %
+            </h3>
+            <p
+              class="mt-4 font-semibold text-[#ff7a00] text-xl lg:text-2xl"
+              id="savings-percentage"
+            >
+              -
+            </p>
+          </div>
         </div>
       </div>
     </div>
     <div
-      class="hidden w-screen h-screen absolute inset-0 "
+      class="hidden w-screen h-screen absolute inset-0 overflow-scroll"
       id="breakup-table-popup"
     >
       <div
@@ -396,7 +408,7 @@
       <div
         class="flex items-center justify-center w-max h-max m-auto absolute inset-0 rounded-lg overflow-hidden"
       >
-        <div class="bg-white px-12 py-8">
+        <div class="bg-white p-4 md:px-12 md:py-8">
           <div class="flex justify-between items-center">
             <h1 class="mb-4">Cost breakup</h1>
           </div>
